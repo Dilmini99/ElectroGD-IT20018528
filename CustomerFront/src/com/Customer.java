@@ -60,3 +60,55 @@ public class Customer {
 		} 		
 	  return output;  
 	} 	
+
+	public String readCustomer()  
+	{   
+		String output = ""; 
+		try   
+		{    
+			Connection con = connect(); 
+		
+			if (con == null)    
+			{
+				return "Error while connecting to the database for reading."; 
+			} 
+	 
+			// Prepare the html table to be displayed    
+			output = "<table border=\'1\'><tr><th>Customer</th><th>Address</th><th>Email</th><th>Phone No</th><th>Update</th><th>Remove</th></tr>";
+	 
+			String query = "select * from customer";    
+			Statement stmt = (Statement) con.createStatement();
+			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
+	 
+			// iterate through the rows in the result set    
+			while (rs.next())    
+			{     
+				String cID = Integer.toString(rs.getInt("cID"));
+				 String cName = rs.getString("cName");
+				 String cAddress = rs.getString("cAddress");
+				 String cEmail = rs.getString("cEmail");
+				 String cPhone = rs.getString("cPhone");
+				 
+				// Add into the html table 
+				output += "<tr><td><input id=\'hidCustomerIDUpdate\' name=\'hidCustomerIDUpdate\' type=\'hidden\' value=\'" + cID + "'>" 
+							+ cName + "</td>"; 
+				output += "<td>" + cAddress + "</td>";
+				output += "<td>" + cEmail + "</td>";
+				output += "<td>" + cPhone + "</td>";
+	 
+				// buttons     
+				output +="<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"       
+						+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-customerid='" + cID + "'>" + "</td></tr>"; 
+			
+			}
+			con.close(); 
+	   
+			output += "</table>";   
+		}   
+		catch (Exception e)   
+		{    
+			output = "Error while reading the Customer.";    
+			System.err.println(e.getMessage());   
+		} 	 
+		return output;  
+	}
