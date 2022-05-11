@@ -146,4 +146,40 @@ public class Customer {
 		} 	 
 	  return output;  
 	} 
+	public String deleteCustomer(String cID)   
+	{   
+		String output = ""; 
+	 
+		try   
+		{    
+			Connection con = connect(); 
+	 
+			if (con == null)    
+			{
+				return "Error while connecting to the database for deleting."; 			
+			} 
+	 
+			// create a prepared statement    
+			String query = "delete from customer where cID=?"; 
+			PreparedStatement preparedStmt = con.prepareStatement(query); 
+	 
+			// binding values    
+			preparedStmt.setInt(1, Integer.parseInt(cID)); 
+	 
+			// execute the statement    
+			preparedStmt.execute();    
+			con.close(); 
+	 
+			String newCustomer = readCustomer();    
+			output = "{\"status\":\"success\", \"data\": \"" +  newCustomer + "\"}";    
+		}   
+		catch (Exception e)   
+		{    
+			output = "Error while deleting the Customer.";    
+			System.err.println(e.getMessage());   
+		} 
+	 
+		return output;  
+	}
 	
+}
