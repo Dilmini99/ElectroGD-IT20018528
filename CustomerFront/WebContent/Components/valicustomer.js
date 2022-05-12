@@ -81,3 +81,51 @@ $(document).on("click", ".btnUpdate", function(event)
 	$("#cEmail").val($(this).closest("tr").find('td:eq(2)').text());
 	$("#cPhone").val($(this).closest("tr").find('td:eq(3)').text());     
 }); 
+
+//REMOVE===========================================
+$(document).on("click", ".btnRemove", function(event) 
+{  
+	$.ajax(  
+	{   
+		url : "CustomerService",   
+		type : "DELETE",   
+		data : "cID=" + $(this).data("customerid"),   
+		dataType : "text",   
+		complete : function(response, status)   
+		{    
+			onCustomerDeleteComplete(response.responseText, status);   
+		}  
+	}); 
+}); 
+
+function onCustomerDeleteComplete(response, status) 
+{  
+	if (status == "success")  
+	{   
+		var resultSet = JSON.parse(response); 
+
+		if (resultSet.status.trim() == "success")   
+		{    
+			
+			$("#alertSuccess").text("Successfully deleted.");    
+			$("#alertSuccess").show(); 
+		
+			$("#divCustomerGrid").html(resultSet.data); 
+			
+		} else if (resultSet.status.trim() == "error")   
+		{    
+			$("#alertError").text(resultSet.data);    
+			$("#alertError").show();   
+		}
+		
+
+	} else if (status == "error")  
+	{   
+		$("#alertError").text("Error while deleting.");   
+		$("#alertError").show();  
+	} else  
+	{   
+		$("#alertError").text("Unknown error while deleting..");   
+		$("#alertError").show();  
+	}
+}
