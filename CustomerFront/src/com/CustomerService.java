@@ -54,3 +54,13 @@ public class CustomerService extends HttpServlet {
 		 
 		 			response.getWriter().write(output);
 	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		Map paras = getParasMap(request); 
+		 
+		 String output = customerObj.deleteCustomer(paras.get("cID").toString());  
+		 
+		 response.getWriter().write(output);
+	}
