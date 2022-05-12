@@ -129,3 +129,35 @@ function onCustomerDeleteComplete(response, status)
 		$("#alertError").show();  
 	}
 }
+
+//CLIENT-MODEL========================================================================= 
+function validateCustomerForm() 
+{  
+	// NAME  
+	if ($("#cName").val().trim() == "")  
+	{   
+		return "Insert Name.";  
+	} 
+
+	// ADDRESS------------------------  
+	if ($("#cAddress").val().trim() == "")  
+	{   
+		return "Insert Address.";  
+	} 
+	
+	// EMAIL------------------------  
+	if ($("#cEmail").val().trim() == "")  
+	{   
+		return "Insert Email.";  
+	} 
+	
+	
+	//PHONE-------------------------------
+	 var tmpPhone = $("#cPhone").val().trim();
+	if (!$.isNumeric(tmpPhone)) 
+	 {
+	 return "Insert Phone No.";
+	 }
+
+	return true; 
+}
