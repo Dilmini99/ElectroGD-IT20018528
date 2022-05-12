@@ -71,3 +71,13 @@ function onCustomerSaveComplete(response, status)
 	$("#hidCustomerIDSave").val("");  
 	$("#formCustomer")[0].reset(); 
 } 
+
+//UPDATE========================================== 
+$(document).on("click", ".btnUpdate", function(event) 
+{     
+	$("#hidCustomerIDSave").val($(this).closest("tr").find('#hidCustomerIDUpdate').val());     
+	$("#cName").val($(this).closest("tr").find('td:eq(0)').text());     
+	$("#cAddress").val($(this).closest("tr").find('td:eq(1)').text());
+	$("#cEmail").val($(this).closest("tr").find('td:eq(2)').text());
+	$("#cPhone").val($(this).closest("tr").find('td:eq(3)').text());     
+}); 
